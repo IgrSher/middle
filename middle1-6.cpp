@@ -4,18 +4,20 @@
 void itc_num_print(int num) {
 	std::cout << num;
 }
-int itc_len_num(long long num) {
-	int col = 0;
+long long itc_len_num(long long num) {
+	long long col = 0;
+	if (num == 0)
+		return 1;
 	while (num) {
 		col++;
 		num = num / 10;
 	}
 	return col;
 }
-int itc_sum_num(long long num) {
-	int sum = 0;
+long long itc_sum_num(long long num) {
+	long long sum = 0;
 	while (num) {
-		sum += num % 10;
+		sum += itc_abs(num % 10);
 		num = num / 10;
 	}
 	return sum;
@@ -23,27 +25,28 @@ int itc_sum_num(long long num) {
 long long itc_multi_num(long long num) {
 	long long prz = 1;
 	while (num) {
-		prz *= num % 10;
+		prz *= itc_abs(num % 10);
 		num = num / 10;
 	}
 	return prz;
 }
 int itc_max_num(long long num) {
-	int n = 0;
+	int max = 0;
 	while (num) {
-		if (num % 10 > n)
-			n = num % 10;
+		int d = itc_abs(num % 10);
+		if (d > max)
+			max = d;
 		num = num / 10;
 	}
-	return n;
+	return max;
 }
 int itc_min_num(long long num) {
-	int n = 0;
+	int min = 10;
 	while (num) {
-		if (num % 10 < n) {
-			n = num % 10;
-			num = num / 10;
-		}
+		int d = itc_abs(num % 10);
+		if (d < min) 
+			min = d;
+		num = num / 10;
 	}
-	return n;
+	return min;
 }
