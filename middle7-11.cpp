@@ -5,7 +5,7 @@ int itc_rev_num(long long num) {
 	long long mun = 0;
 	int col = 0;
 	while (num) {
-		col = num % 10;
+		col = itc_abs(num % 10);
 		mun = (col*10)+(mun*10);
 		num = num / 10;
 	}
@@ -15,7 +15,8 @@ int itc_rev_num(long long num) {
 int itc_null_count(long long num) {
 	int col = 0;
 	while (num) {
-		if (num % 10 == 0) 
+		int d = itc_abs(num % 10);
+		if (d == 0) 
 			col++;
 		num = num / 10;
 	}
@@ -23,30 +24,26 @@ int itc_null_count(long long num) {
 }
 bool itc_mirror_num(long long num) {
 	long long mun = 0, num1 = num;
-	int col = 0;
 	while (num) {
-		col = num % 10;
-		mun = (col * 10) + (mun * 10);
+		int d = itc_abs(num % 10);
+		mun = (d * 10) + (mun * 10);
 		num = num / 10;
 	}
 	mun /= 10;
-	if (num1 == mun)
+	if (itc_abs(num1) == itc_abs(mun))
 		return true;
 	else
 		return false;
 }
 int itc_mirror_count(long long num) {
 	int n = 0;
-	for (long long i = 1; i <= num; i++) {
-		long long revi = 0, i1 = i, i2 = i;
-		int col;
-		while (i2) {
-			col = i2 % 10;
-			revi = (revi * 10) + col;
-			i2 /= 10;
-		}
-		if (i1 == revi)
-			n++;
+	if (num > 0) {
+		for (int i = 1; i <= num; i++)
+			if (itc_mirror_num(i)) n++;
+	}
+	else {
+		for (int i = 1; i >= num; i--)
+			if (itc_mirror_num(i)) n++;
 	}
 	return n;
 }
@@ -73,6 +70,5 @@ int itc_second_max_num(long long num) {
 			num1 /= 10;
 		}
 		return max2;
-		//return ind1;
 	}
 }
